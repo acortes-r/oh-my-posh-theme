@@ -1,0 +1,71 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "version": 4,
+  "blocks": [
+    {
+      "type": "prompt",
+      "alignment": "left",
+      "segments": [
+        {
+          "type": "path",
+          "style": "plain",
+          "foreground": "cyan",
+          "options": {
+            "style": "full",
+            "home_icon": "~"
+          },
+          "template": "{{ .Path }} "
+        },
+        {
+          "type": "git",
+          "style": "plain",
+          "foreground": "green",
+          "foreground_templates": [
+            "{{ if or .Working.Changed .Staging.Changed }}yellow{{ end }}"
+          ],
+          "options": {
+            "fetch_status": true,
+            "branch_icon": " ",
+            "fetch_stash_count": true
+          },
+          "template": "<darkGray>on</> {{ .HEAD }}{{ if gt .Ahead 0 }} <cyan>↑{{ .Ahead }}</>{{ end }}{{ if gt .Behind 0 }} <cyan>↓{{ .Behind }}</>{{ end }}{{ if .Staging.Changed }} <green>+{{ add .Staging.Added .Staging.Modified .Staging.Deleted .Staging.Moved }}</>{{ end }}{{ $w := add .Working.Modified .Working.Deleted .Working.Unmerged }}{{ if gt $w 0 }} <red>~{{ $w }}</>{{ end }}{{ if gt .Working.Untracked 0 }} <darkGray>?{{ .Working.Untracked }}</>{{ end }}{{ if gt .StashCount 0 }} <magenta>≡{{ .StashCount }}</>{{ end }}"
+        }
+      ]
+    },
+    {
+      "type": "prompt",
+      "alignment": "right",
+      "segments": [
+        {
+          "type": "time",
+          "style": "plain",
+          "foreground": "darkGray",
+          "options": {
+            "time_format": "3:04:05 PM"
+          },
+          "template": "{{ .CurrentDate | date .Format }}"
+        }
+      ],
+      "overflow": "hide"
+    },
+    {
+      "type": "prompt",
+      "alignment": "left",
+      "newline": true,
+      "segments": [
+        {
+          "type": "status",
+          "style": "plain",
+          "foreground": "green",
+          "foreground_templates": [
+            "{{ if gt .Code 0 }}red{{ end }}"
+          ],
+          "options": {
+            "always_enabled": true
+          },
+          "template": "➜ "
+        }
+      ]
+    }
+  ]
+}
